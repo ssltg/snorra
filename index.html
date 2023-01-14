@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"
+      xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Lora:700' rel='stylesheet' type='text/css'>
+    <style>
+        @font-face { font-family: MADGaramondPro; src: url('MADGaramondPro.ttf'); }
+
+        h1, div {
+            font-family: MADGaramondPro;
+        }
+
+        div.plain {
+            background-color: lightgrey;
+        }
+    </style>
+</head>
+<body  class="h-100">
+    <div id="accordion" class="h-100">
+        <h1 id="page-header" class="text-center"><small>Valkyrie Translation Helper&#xf209</small></h1>;
+        <div class="card h-100">
+            <div class="container-fluid">
+                <div class="row justify-content-center">
+                    <button type="button" class="m-1 btn btn-primary text-center" data-toggle="collapse" data-target="#importContainer" aria-expanded="false" aria-controls="importContainer">
+                        Show Import
+                    </button>
+                    <button type="button" class="m-1 btn btn-primary text-center" data-toggle="collapse" data-target="#translationContainer" aria-expanded="false" aria-controls="translationContainer">
+                        Show Translation Panel
+                    </button>
+                    <button onclick="refreshExport()" type="button" class="m-1 btn btn-primary text-center" data-toggle="collapse" data-target="#exportContainer" aria-expanded="false" aria-controls="exportContainer">
+                        Show Export
+                    </button>
+                    <button type="button" class="m-1 btn btn-primary text-center" data-toggle="collapse" data-target="#helpContainer" aria-expanded="false" aria-controls="helpContainer">
+                        Show Help
+                    </button>
+                </div>
+            </div>
+            <div id="importContainer" class="container-fluid h-75 collapse" data-parent="#accordion">
+                <div class="row justify-content-center h-75">
+                    <div id="importdiv" class="container-fluid col-12 h-100">
+                        <div class="row h-100">
+                            <div class="col-10 h-100">
+                                <i>Paste the content of the Localization.XXX.txt from the source language in the text field. <b>Attention!! The following will overwrite unsaved changes:</b> Then click on the "Import" button</i>
+                                <textarea id="import" class="w-100 h-100"></textarea>
+                            </div>
+                            <div class="col-2">
+                                <button type="button" class="m-1 btn btn-primary text-center" value="import" onclick="doImport()">Import</button>
+                                <button type="button" class="m-1 btn btn-danger text-center" data-toggle="collapse" data-target="#advanced" aria-expanded="false" aria-controls="advanced">
+                                    Advanced
+                                </button>
+                                <div class="collapse" id="advanced">
+                                    <input type="file" id="restore" class="btn btn-primary" name="restore">Restore Local Backup</input>
+                                    <button type="button" class="m-1 btn btn-primary text-center" value="import" onclick="doImportUpdateSource()">Update Source</button>
+                                    <button type="button" class="m-1 btn btn-primary text-center" value="import" onclick="doImportUpdateTranslation()">Update Translation</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="translationContainer" class="container-fluid h-75 collapse" data-parent="#accordion">
+                <div class="row justify-content-center">
+                    <select id="keySelect" onchange="selectKey(this)"></select>
+                    <button type="button" onclick="document.execCommand('insertText', false, '&#xf200');$('#translation').focus().blur();" class="p-1 btn btn-outline-dark" title="strength">&#xf200</button>
+                    <button type="button" onclick="document.execCommand('insertText', false, '&#xf201');$('#translation').focus().blur();" class="p-1 btn btn-outline-dark" title="agility">&#xf201</button>
+                    <button type="button" onclick="document.execCommand('insertText', false, '&#xf202');$('#translation').focus().blur();" class="p-1 btn btn-outline-dark" title="observation">&#xf202</button>
+                    <button type="button" onclick="document.execCommand('insertText', false, '&#xf203');$('#translation').focus().blur();" class="p-1 btn btn-outline-dark" title="lore">&#xf203</button>
+                    <button type="button" onclick="document.execCommand('insertText', false, '&#xf204');$('#translation').focus().blur();" class="p-1 btn btn-outline-dark" title="influence">&#xf204</button>
+                    <button type="button" onclick="document.execCommand('insertText', false, '&#xf205');$('#translation').focus().blur();" class="p-1 btn btn-outline-dark" title="will">&#xf205</button>
+                    <button type="button" onclick="document.execCommand('insertText', false, '&#xf206');$('#translation').focus().blur();" class="p-1 btn btn-outline-dark" title="eldersign">&#xf206</button>
+                    <button type="button" onclick="document.execCommand('insertText', false, '&#xf207');$('#translation').focus().blur();" class="p-1 btn btn-outline-dark" title="clue">&#xf207</button>
+                    <button type="button" onclick="document.execCommand('insertText', false, '&#xf208');$('#translation').focus().blur();" class="p-1 btn btn-outline-dark" title="action">&#xf208</button>
+                    <button type="button" onclick="document.execCommand('insertText', false, '&#xf209');$('#translation').focus().blur();" class="p-1 btn btn-outline-dark" title="Set: Base (Tentacle)">&#xf209</button>
+                    <button type="button" onclick="document.execCommand('insertText', false, '&#xf20A');$('#translation').focus().blur();" class="p-1 btn btn-outline-dark" title="Set: nightmares">&#xf20A</button>
+                    <button type="button" onclick="document.execCommand('insertText', false, '&#xf20B');$('#translation').focus().blur();" class="p-1 btn btn-outline-dark" title="Set: alchemy">&#xf20B</button>
+                    <button type="button" onclick="document.execCommand('insertText', false, '&#xf20C');$('#translation').focus().blur();" class="p-1 btn btn-outline-dark" title="Set: call of the wild">&#xf20C</button>
+                    <button type="button" onclick="document.execCommand('insertText', false, '&#xf20D');$('#translation').focus().blur();" class="p-1 btn btn-outline-dark" title="Set: thresholds">&#xf20D</button>
+                    <button type="button" onclick="document.execCommand('insertText', false, '&#xf20E');$('#translation').focus().blur();" class="p-1 btn btn-outline-dark" title="Set: streets">&#xf20E</button>
+                    <button type="button" onclick="document.execCommand('insertText', false, '&#xf20F');$('#translation').focus().blur();" class="p-1 btn btn-outline-dark" title="Set: sanctum">&#xf20F</button>
+                    <button type="button" onclick="document.execCommand('insertText', false, '&#xf480');$('#translation').focus().blur();" class="p-1 btn btn-outline-dark" title="Set: journeys">&#xf480</button>
+                    <button type="button" onclick="document.execCommand('insertText', false, '&#xf481');$('#translation').focus().blur();" class="p-1 btn btn-outline-dark" title="Set: serpent">&#xf481</button>
+                    <button type="button" onclick="document.execCommand('bold');$('#translation').focus().blur();" class="p-1 btn btn-outline-dark">bold</button>
+                    <button type="button" onclick="document.execCommand('italic');$('#translation').focus().blur();" class="p-1 btn btn-outline-dark">italic</button>
+                    <button type="button" onclick="insertColorGrey();$('#translation').focus().blur();" class="p-1 btn btn-outline-dark" title="Color: grey">Instructions</button>
+                    <button type="button" onclick="insertColorGreen();$('#translation').focus().blur();" class="p-1 btn btn-outline-dark" title="Color: green">Reference</button>
+                    <button type="button" onclick="insertColorRed();$('#translation').focus().blur();" class="p-1 btn btn-outline-dark" title="Color: gred">Attention</button>
+                    <button type="button" onclick="document.execCommand('removeFormat');$('#translation').focus().blur();" class="p-1 btn btn-outline-dark" title="Clear Formatting">clear</button>
+                    <button type="button" onclick="document.execCommand('redo');;$('#translation').focus().blur();" class="p-1 btn btn-outline-dark" title="Clear Formatting">&#x21AA</button>
+                    <button type="button" onclick="document.execCommand('undo');;$('#translation').focus().blur();" class="p-1 btn btn-outline-dark" title="Clear Formatting">&#x21A9</button>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-6"><label for="source">Source</label></div>
+                    <div class="col-6">
+                        <label for="translation" >Translation</label>
+                    </div>
+                </div>
+                <div class="row justify-content-center h-75">
+                    <div id="source" class="col-6 border h-100 overflow-auto multi-collapse collapse show" contenteditable="true"></div>
+                    <div id="translation" class="col-6 border h-100 overflow-auto multi-collapse collapse show" contenteditable="true"></div>
+                </div>
+                <div class="row justify-content-center">
+                    <button type="button"class="m-1 btn btn-secondary text-center" onclick="sourceView()">SourceView</button>
+                    <a class="m-1 btn btn-secondary text-center" onmousedown="sourceToClipboard()" target="_blank" href="https://www.deepl.com/translator">copy source to clipboard and open deepl</a>
+                </div>
+            </div>
+            <div id="exportContainer" class="container-fluid h-75 collapse" data-parent="#accordion">
+                <div class="row justify-content-center h-75">
+                    <div id="exportdiv" class="container-fluid col-12 h-100">
+                        <div class="row h-100">
+                            <div class="col-12 h-100">
+                                <i>Paste this content to the Localization.XXX.txt from the target language in the text field. XXX should be the language you translated to.</i>
+                                <button type="button" onclick="exportLocalStorage()" class="p-1 btn btn-outline-dark" title="Export Current Working State">Export Current Working State</button>
+                                <textarea id="export" class="w-100 h-100"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="helpContainer" class="container-fluid h-75 collapse" data-parent="#accordion">
+                <div class="row justify-content-center h-75">
+                    <div id="helpdiv" class="container-fluid col-12 h-100">
+                        <div class="row h-100">
+                            <div class="col-12 h-100">
+                                <h3>Help</h3>
+                                <span>
+                                    This Webpage is designed to help translate Valkyrie scenarios.<br>
+                                    It`s currently in Alpha State, so don't rely on the functionality and backup your progress often. (nothing is more frustrating then an evening of work for the trashbin). So I repeat "SAVE OFTEN".<br>
+                                    To backup your current state you can use the button under the "Export" pane.<br>
+                                    The Page itself is intended to be self explaining, but here are some basics:<br>
+                                    First you should paste the contents of the file "Localization.English.txt" from the Scenario you want to translate to the Textfield under the "Import"-Pane. (If your source language is other then english you should paste the appropriate file (e.g. "Localization.Spanish.txt" or "Localization.French.txt") ) for sure.<br>
+                                    Then you hit the "Import" button.<br>
+                                    Now the contents are stored in the storage of your browser.<br/>
+                                    Next click on the button "Show Translation Panel". Here you can see a select box with all the translation keys. You also see 2 Textfields. The left one is the source field. You should not change the contents (also changes here will not be saved anywhere).<br>
+                                    The right field is the translation field. Here you can edit your translations. As long as you didn't changed anything, this field also shows the source-text.<br>
+                                    All your changes in the right field will be saved regulary to the storage.<br>
+                                    You can change the current translation with the select field on the top left.<br>
+                                    On the bottom you see 2 buttons. "SourceView" will change the textfields to a view where you can see the source without rendering (e.g. &lt;b&gt;important&lt;/b&gt; instead of <b>importand</b>).<br/>
+                                    The "copy source top clipboard and open deepl" button will to exactly that. It copies the current content of the left text field (source) to your clipboard and opens deepl in a new tab. So you can just paste the text to the left field of deepl and it can help you translate.<br>
+                                    On the top you see different "styling" buttons. Some of the MoM symbols which will be replaced by the appropriate tags for Valkyrie (e.g. {MAD20} or {action}). The "Instructions", "Reference" and "Attention" buttons will colorize your selected text to provide a good readability.<br>
+                                    Beware that Valkyrie cannot render every html tag and some characters (as the " for example) can break your Localization file. So try to only use standard characters and the styling possibilities provided by the buttons.<br/>
+                                    As the import and export of " can cause many errors, all the " (double quotes) in the source Localization will be replaced by ' (single quotes).<br/>
+                                    Do recular backups of your work by the "Export Current Working State" button under the "Export" Pane. This will let you download the current storage to your local computer.<br>
+                                    When you continue work, or experience troubles, you can reimport this state with the "Browse..." (The File selection Input) under the "Import" Pane when you click on "Advanced".<br>
+                                    This will import your backup and overwrite all current storage.<br>
+                                    <br>
+
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<textarea id="pastebin" class="collapse"></textarea>
+</body>
+<!-- Include jQuery in head to be able to use it in property templates -->
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+<script src="./md5.js"></script>
+<script src="./snorra.js"></script>
+</html>

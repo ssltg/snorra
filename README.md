@@ -1,0 +1,2 @@
+This Webpage is designed to help translate Valkyrie scenarios.
+It`s currently in Alpha State, so don't rely on the functionality and backup your progress often. (nothing is more frustrating then an evening of work for the trashbin). So I repeat "SAVE OFTEN".
