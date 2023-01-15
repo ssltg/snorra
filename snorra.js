@@ -56,7 +56,7 @@ function sourceView() {
 }
 
 function sourceToClipboard() {
-    $('#pastebin').toggleClass('show').html($('#source').text()).select()
+    $('#pastebin').toggleClass('show').text($('#source').html().replace(/<br>/g, "\n")).select()
     document.execCommand("copy");
     $('#pastebin').toggleClass('show');
 }
