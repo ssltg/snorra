@@ -17,6 +17,25 @@ $('#translation').blur(function () {
     window.localStorage.setItem('translation', JSON.stringify(translation));
 });
 
+$(window).keydown(function(event) {
+    if (!event.ctrlKey) {
+        return;
+    }
+    if (event.which === 39) { // strg + arrow right
+        document.getElementById('keySelect').selectedIndex++;
+        const event = new MouseEvent('change');
+        document.getElementById('keySelect').dispatchEvent(event);
+        return;
+    }
+
+    if (event.which === 37) { // strg + arrow left
+        document.getElementById('keySelect').selectedIndex--;
+        const event = new MouseEvent('change');
+        document.getElementById('keySelect').dispatchEvent(event);
+        return;
+    }
+});
+
 $('#translationContainer').on('show.bs.collapse', function () {
     fillSelect();
 });
