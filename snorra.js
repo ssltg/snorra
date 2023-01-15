@@ -216,6 +216,8 @@ function importLocalStorage(event) {
     reader.readAsText(files[0]);
     reader.onload = function() {
         let backup = JSON.parse(reader.result);
+        window.localStorage.removeItem('source');
+        window.localStorage.removeItem('translation');
         window.localStorage.setItem('source', JSON.stringify(backup.source));
         window.localStorage.setItem('translation', JSON.stringify(backup.translation));
     };
