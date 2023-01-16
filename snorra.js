@@ -25,6 +25,55 @@ function updateTranslationSnippet() {
 
     translation[keySelect.value]['completed'] = $('#isCompleted')[0].checked ?? false;
     window.localStorage.setItem('translation', JSON.stringify(translation));
+    checkPercentage();
+}
+
+function checkPercentage() {
+    let translation = JSON.parse(window.localStorage.getItem('translation'));
+    if (translation === undefined || translation === null) {
+        return;
+    }
+
+    let count = 0;
+    let completed = 0;
+    for (const [index, element] of Object.entries(translation)) {
+        count++;
+        if(element['completed'] === true){
+            completed++;
+        }
+    }
+
+    document.getElementById('percentage').innerText = (completed * 100 / count).toPrecision(2).toString();
+}
+
+function translateDuplicates() {
+    let translation = JSON.parse(window.localStorage.getItem('translation'));
+    let source = JSON.parse(window.localStorage.getItem('source'));
+    if (source === undefined || source === null || translation === undefined || translation === null) {
+        return;
+    }
+
+    let clonedTranslation = JSON.parse(JSON.stringify(translation));
+
+    let changed = false;
+    for (const [index, element] of Object.entries(translation)) {
+        if(element['completed'] === true){
+            for (const [index2, element2] of Object.entries(clonedTranslation)) {
+                if (
+                        (element2['completed'] === undefined || element2['completed'] === false) &&
+                        element2['value'] === source[index]['value']
+                ) {
+                    changed = true;
+                    element2['value'] = element['value'];
+                    element2['completed'] = true;
+                }
+            }
+        }
+    }
+
+    if (changed) {
+        window.localStorage.setItem('translation', JSON.stringify(clonedTranslation));
+    }
 }
 
 function dropImportHandler(ev) {
@@ -69,6 +118,8 @@ $(window).keydown(function(event) {
     if (!event.ctrlKey) {
         return;
     }
+
+    // Next Snippet
     if (event.which === 39) { // strg + arrow right
         updateTranslationSnippet();
         document.getElementById('keySelect').selectedIndex++;
@@ -77,6 +128,7 @@ $(window).keydown(function(event) {
         return;
     }
 
+    // Previous Snippet
     if (event.which === 37) { // strg + arrow left
         updateTranslationSnippet();
         document.getElementById('keySelect').selectedIndex--;
@@ -84,10 +136,18 @@ $(window).keydown(function(event) {
         document.getElementById('keySelect').dispatchEvent(event);
         return;
     }
+
+    // Toggle Completed
+    if (event.which === 188) { // strg + ,
+        document.getElementById('isCompleted').checked = !document.getElementById('isCompleted').checked;
+        updateTranslationSnippet();
+        return;
+    }
 });
 
 $('#translationContainer').on('show.bs.collapse', function () {
     fillSelect();
+    checkPercentage();
 });
 
 function insertColorGrey() {
@@ -346,6 +406,7 @@ function cleanUpExport(text) {
         .replace(/\&#xf20F/g, '{MAD26}') //sanctum
         .replace(/\&#xf480/g, '{MAD27}') //journeys
         .replace(/\&#xf481/g, '{MAD28}') //serpent
+        .replace(/<div><br><\/div>/gi, '\\n\\n')
         .replace(/<\/br>/gi, '\\n')
         .replace(/<br>/gi, '\\n')
         .replace(/<\/div>/gi, '')

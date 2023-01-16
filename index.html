@@ -105,10 +105,13 @@
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-6"><label for="source">Source</label></div>
-                    <div class="col-6">
+                    <div class="col-6 d-flex justify-content-between">
                         <label for="translation" >Translation</label>
-                        <label for="isCompleted" >mark as Completed</label>
-                        <input id="isCompleted" type="checkbox" value="true">
+                        <span>
+                            <label for="isCompleted" >mark as Completed</label>
+                            <input id="isCompleted" type="checkbox" value="true">
+                        </span>
+                        <span><span> </span><span id="percentage"></span><span>%</span></span>
                     </div>
                 </div>
                 <div class="row justify-content-center h-75">
@@ -117,8 +120,9 @@
                 </div>
                 <div class="row justify-content-center">
                     <div class="col d-flex justify-content-center">
+                        <button type="button"class="m-1 btn btn-secondary text-center" onclick="translateDuplicates()">Translate Duplicates</button>
                         <button type="button"class="m-1 btn btn-secondary text-center" onclick="sourceView()">SourceView</button>
-                        <a class="m-1 btn btn-secondary text-center" onmousedown="sourceToClipboard()" target="_blank" href="https://www.deepl.com/translator">copy source to clipboard and open deepl</a>
+                        <a class="m-1 btn btn-secondary text-center" onmousedown="sourceToClipboard()" target="deeplTab" href="https://www.deepl.com/translator">copy source to clipboard and open deepl</a>
                     </div>
                 </div>
             </div>

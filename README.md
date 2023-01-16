@@ -10,4 +10,5 @@ If everything is finished, you can export the results to your new localization f
 
 
 Changed:
-* Now you can mark completed snippets as "completed". You can have a better overview if a text is still completely translating or just a draft. Also you can exclude the "completed" snippets of being overwritten on an import. (e.g. if the Scenario was updated.) 
+* Now you can mark completed snippets as "completed". You can have a better overview if a text is still completely translating or just a draft. Also you can exclude the "completed" snippets of being overwritten on an import. (e.g. if the Scenario was updated.)
+* Now you can translate duplicates by pressing the butto on the bottom of the translation panel. This will search all non completed translations for already completed translations with the exact same value and translate them also. This is very hand for button texts like "continue" or "inverstigate".
