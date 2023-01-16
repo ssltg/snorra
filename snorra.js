@@ -17,6 +17,44 @@ $('#translation').blur(function () {
     window.localStorage.setItem('translation', JSON.stringify(translation));
 });
 
+function dropImportHandler(ev) {
+    ev.preventDefault();
+
+    let file = null;
+    if (ev.dataTransfer.items) {
+        if (ev.dataTransfer.items.length > 1) {
+            alert('you can drop only a sinlge file!');
+            return;
+        }
+        let item = ev.dataTransfer.items[0];
+        if (item.kind === 'file') {
+            file = item.getAsFile();
+        }
+    } else if (ev.dataTransfer.files) {
+        if (ev.dataTransfer.files.length > 1 || ev.dataTransfer.files.length === 0) {
+            alert('you can drop only a sinlge file!');
+            return;
+        }
+        file = ev.dataTransfer.files[0];
+    }
+
+    if (file === null) {
+        return;
+    }
+
+    let reader = new FileReader();
+    reader.readAsText(file);
+    reader.onload = function() {
+        document.getElementById('import').innerHTML = reader.result;
+    };
+
+}
+
+function dragoverImportHandler(ev) {
+    ev.preventDefault();
+    ev.dataTransfer.dropEffect = "copy";
+}
+
 $(window).keydown(function(event) {
     if (!event.ctrlKey) {
         return;
