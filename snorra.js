@@ -1,4 +1,8 @@
 $('#translation').blur(function () {
+    updateTranslationSnippet();
+});
+
+function updateTranslationSnippet() {
     let translation = JSON.parse(window.localStorage.getItem('translation'));
     if (translation === undefined || translation === null) {
         return;
@@ -15,7 +19,7 @@ $('#translation').blur(function () {
         translation[keySelect.value]['value'] = $('#translation').html();
     }
     window.localStorage.setItem('translation', JSON.stringify(translation));
-});
+}
 
 function dropImportHandler(ev) {
     ev.preventDefault();
@@ -60,6 +64,7 @@ $(window).keydown(function(event) {
         return;
     }
     if (event.which === 39) { // strg + arrow right
+        updateTranslationSnippet();
         document.getElementById('keySelect').selectedIndex++;
         const event = new MouseEvent('change');
         document.getElementById('keySelect').dispatchEvent(event);
@@ -67,6 +72,7 @@ $(window).keydown(function(event) {
     }
 
     if (event.which === 37) { // strg + arrow left
+        updateTranslationSnippet();
         document.getElementById('keySelect').selectedIndex--;
         const event = new MouseEvent('change');
         document.getElementById('keySelect').dispatchEvent(event);
