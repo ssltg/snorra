@@ -7,3 +7,7 @@ With this tool you can easily translate Valkyrie Localizations (or any other com
 
 You can just upload or paste your source language localization file and start translating to your destination language.
 If everything is finished, you can export the results to your new localization file.
+
+
+Changed:
+* Now you can mark completed snippets as "completed". You can have a better overview if a text is still completely translating or just a draft. Also you can exclude the "completed" snippets of being overwritten on an import. (e.g. if the Scenario was updated.) 

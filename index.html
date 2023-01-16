@@ -52,6 +52,8 @@
                                 <i>Paste the content of (or just drop) the Localization.XXX.txt from the source language in the text field. <b>Attention!! The following will overwrite unsaved changes you made here:</b> Then click on the "Import" button</i>
                             </div>
                             <div class="col-2">
+                                <label for="overwriteCompleted">Overwrite completed Translations</label>
+                                <input id="overwriteCompleted" type="checkbox" value="true" />
                                 <button type="button" class="m-1 btn btn-primary text-center" value="import" onclick="doImport()" title="Import the contents of the textfield to the local storage (overwrites the current storage!!!)">Import</button>
                                 <button type="button" class="m-1 btn btn-danger text-center" data-bs-toggle="collapse" data-bs-target="#advanced" aria-expanded="false" aria-controls="advanced" title="Show advance options. Only use if you know what you are doing!">
                                     Advanced
@@ -105,6 +107,8 @@
                     <div class="col-6"><label for="source">Source</label></div>
                     <div class="col-6">
                         <label for="translation" >Translation</label>
+                        <label for="isCompleted" >mark as Completed</label>
+                        <input id="isCompleted" type="checkbox" value="true">
                     </div>
                 </div>
                 <div class="row justify-content-center h-75">

@@ -3,11 +3,15 @@ $('#translation').blur(function () {
 });
 
 function updateTranslationSnippet() {
+    let keySelect = document.getElementById('keySelect');
+    if (keySelect.value === '') {
+        return;
+    }
     let translation = JSON.parse(window.localStorage.getItem('translation'));
     if (translation === undefined || translation === null) {
         return;
     }
-    let keySelect = document.getElementById('keySelect');
+
     if ($('#translation').hasClass('plain')) {
         translation[keySelect.value]['value'] = $('#pastebin').html($('#translation').html()).text();
     } else {
@@ -18,6 +22,8 @@ function updateTranslationSnippet() {
         }
         translation[keySelect.value]['value'] = $('#translation').html();
     }
+
+    translation[keySelect.value]['completed'] = $('#isCompleted')[0].checked ?? false;
     window.localStorage.setItem('translation', JSON.stringify(translation));
 }
 
@@ -137,6 +143,9 @@ function doImport() {
     let selectTag = $('#keySelect');
     selectTag.empty();
     fillSelect();
+    selectTag.value = '';
+    $('#source').html('');
+    $('#translation').html('');
 }
 
 function doImportUpdateSource() {
@@ -179,7 +188,31 @@ function setTranslation() {
     if (source === undefined || source === null) {
         return;
     }
-    window.localStorage.setItem('translation', source);
+
+    if (!$('#overwriteCompleted')[0].checked) {
+        let orgTranslation = {};
+        try {
+            orgTranslation = JSON.parse(window.localStorage.getItem('translation'));
+        } catch(error) {
+            // ignore
+        }
+
+        let onlyCompletedTranslation = {};
+
+        for (const [index, element] of Object.entries(orgTranslation)) {
+            if(element['completed'] === true){
+                onlyCompletedTranslation[index] = element;
+            }
+        }
+
+        let mergedTranslation = {
+            ...JSON.parse(source),
+            ...onlyCompletedTranslation
+        };
+        window.localStorage.setItem('translation', JSON.stringify(mergedTranslation));
+    } else {
+        window.localStorage.setItem('translation', source);
+    }
 }
 
 function fillSelect() {
@@ -188,6 +221,12 @@ function fillSelect() {
     if (source === undefined || source === null) {
         selectTag.empty();
         return;
+    }
+    if ($('#keySelect option[value=""]').length === 0) {
+        let opt = document.createElement("option");
+        opt.value = '';
+        opt.innerHTML = 'Please Choose';
+        selectTag.append(opt);
     }
     Object.entries(source).forEach((entry) => {
         if ($('#keySelect option[value="' + entry[0] + '"]').length > 0) {
@@ -211,6 +250,7 @@ function selectKey(select) {
     }
     $('#source').html(source[select.value]['value']);
     $('#translation').html(translation[select.value]?.['value']??'');
+    $('#isCompleted')[0].checked = translation[select.value]?.['completed']??false;
 }
 
 function splitTranslation(text) {
