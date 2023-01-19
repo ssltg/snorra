@@ -2,6 +2,12 @@ $('#translation').blur(function () {
     updateTranslationSnippet();
 });
 
+$('#ignoreCompleted').change(function () {
+    let selectTag = $('#keySelect');
+    selectTag.empty();
+    fillSelect();
+});
+
 function updateTranslationSnippet() {
     let keySelect = document.getElementById('keySelect');
     if (keySelect.value === '') {
@@ -288,10 +294,20 @@ function fillSelect() {
         opt.innerHTML = 'Please Choose';
         selectTag.append(opt);
     }
-    Object.entries(source).forEach((entry) => {
-        if ($('#keySelect option[value="' + entry[0] + '"]').length > 0) {
-            return;
-        }
+    let ignoreCompleted = document.getElementById('ignoreCompleted').checked;
+    let translation = {};
+    console.log(ignoreCompleted);
+    if (ignoreCompleted) {
+       translation = JSON.parse(window.localStorage.getItem('translation'));
+    }
+        Object.entries(source).forEach((entry) => {
+            if ($('#keySelect option[value="' + entry[0] + '"]').length > 0) {
+                return;
+            }
+            if (ignoreCompleted && translation[entry[0]]['completed'] === true) {
+                return;
+            }
+
             let opt = document.createElement("option");
             opt.value = entry[0];
             opt.innerHTML = entry[1]['key'];
@@ -300,6 +316,12 @@ function fillSelect() {
 }
 
 function selectKey(select) {
+    if (select.value === '') {
+        $('#source').html('');
+        $('#translation').html('');
+        $('#isCompleted')[0].checked = false;
+        return;
+    }
     let source = JSON.parse(window.localStorage.getItem('source'));
     let translation = JSON.parse(window.localStorage.getItem('translation'));
     if (source === undefined || source === null || translation === undefined || translation === null) {

@@ -19,6 +19,10 @@
         div.plain {
             background-color: lightgrey;
         }
+
+        #keySelect {
+            max-width: 200px;
+        }
     </style>
 </head>
 <body  class="h-100">
@@ -37,9 +41,7 @@
                         <button onclick="refreshExport()" type="button" class="m-1 btn btn-primary text-center" data-bs-toggle="collapse" data-bs-target="#exportContainer" aria-expanded="false" aria-controls="exportContainer">
                             Show Export
                         </button>
-                        <button type="button" class="m-1 btn btn-primary text-center" data-bs-toggle="collapse" data-bs-target="#helpContainer" aria-expanded="false" aria-controls="helpContainer">
-                            Show Help
-                        </button>
+                        <a class="m-1 btn btn-primary text-center" target="wikiTab" href="https://github.com/ssltg/snorra/wiki">Show Help</a>
                     </div>
                 </div>
             </div>
@@ -73,8 +75,16 @@
             </div>
             <div id="translationContainer" class="container-fluid h-75 collapse" data-bs-parent="#accordion">
                 <div class="row">
-                    <div class="col d-flex justify-content-center">
-                        <select id="keySelect" onchange="selectKey(this)"></select>
+                    <div class="col d-flex justify-content-between">
+                        <div>
+                            <label for="ignoreCompleted" >ignore Completed</label>
+                            <input id="ignoreCompleted" type="checkbox" value="true">
+                        </div>
+                        <div>
+                            <select id="keySelect" onchange="selectKey(this)"></select>
+                        </div>
+                        <div> </div>
+                        <div>
                         <button type="button" onclick="document.execCommand('insertText', false, '&#xf200');$('#translation').focus().blur();" class="p-1 btn btn-outline-dark" title="strength">&#xf200</button>
                         <button type="button" onclick="document.execCommand('insertText', false, '&#xf201');$('#translation').focus().blur();" class="p-1 btn btn-outline-dark" title="agility">&#xf201</button>
                         <button type="button" onclick="document.execCommand('insertText', false, '&#xf202');$('#translation').focus().blur();" class="p-1 btn btn-outline-dark" title="observation">&#xf202</button>
@@ -134,44 +144,6 @@
                                 <i>Paste this content to the Localization.XXX.txt from the target language in the text field. XXX should be the language you translated to.</i>
                                 <button type="button" onclick="exportLocalStorage()" class="p-1 btn btn-outline-dark" title="Export Current Working State">Export Current Working State</button>
                                 <textarea id="export" class="w-100 h-100"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="helpContainer" class="container-fluid h-75 collapse" data-bs-parent="#accordion">
-                <div class="row justify-content-center h-75">
-                    <div id="helpdiv" class="container-fluid col-12 h-100">
-                        <div class="row h-100">
-                            <div class="col-12 h-100">
-                                <h3>Help</h3>
-                                <span>
-                                    This Webpage is designed to help translate Valkyrie scenarios. (Valkyrie is a tool for Fantasy Flight Board Games by NPBruce <a href="https://github.com/NPBruce/valkyrie">https://github.com/NPBruce/valkyrie</a>)<br>
-                                    It`s currently in Alpha State, so don't rely on the functionality and backup your progress often. (nothing is more frustrating then an evening of work for the trashbin). So I repeat "SAVE OFTEN".<br>
-                                    To backup your current state you can use the button under the "Export" pane.<br>
-                                    The Page itself is intended to be self explaining, but here are some basics:<br>
-                                    First you should paste the contents of the file "Localization.English.txt" from the Scenario you want to translate to the Textfield under the "Import"-Pane. (If your source language is other then english you should paste the appropriate file (e.g. "Localization.Spanish.txt" or "Localization.French.txt") ) for sure.<br>
-                                    Then you hit the "Import" button.<br>
-                                    Now the contents are stored in the storage of your browser.<br/>
-                                    Next click on the button "Show Translation Panel". Here you can see a select box with all the translation keys. You also see 2 Textfields. The left one is the source field. You should not change the contents (also changes here will not be saved anywhere).<br>
-                                    The right field is the translation field. Here you can edit your translations. As long as you didn't changed anything, this field also shows the source-text.<br>
-                                    All your changes in the right field will be saved regulary to the storage.<br>
-                                    You can change the current translation with the select field on the top left.<br>
-                                    On the bottom you see 2 buttons. "SourceView" will change the textfields to a view where you can see the source without rendering (e.g. &lt;b&gt;important&lt;/b&gt; instead of <b>important</b>).<br/>
-                                    The "copy source top clipboard and open deepl" button will do exactly that. It copies the current content of the left text field (source) to your clipboard and opens deepl in a new tab. So you can just paste the text to the left field of deepl and it can help you translate.<br>
-                                    On the top you see different "styling" buttons. Some of the MoM symbols which will be replaced by the appropriate tags for Valkyrie (e.g. {MAD20} or {action}). The "Instructions", "Reference" and "Attention" buttons will colorize your selected text to provide a good readability.<br>
-                                    Beware that Valkyrie cannot render every html tag and some characters (as the " for example) can break your Localization file. So try to only use standard characters and the styling possibilities provided by the buttons.<br/>
-                                    As the import and export of " can cause many errors, all the " (double quotes) in the source Localization will be replaced by ' (single quotes).<br/>
-                                    Do regular backups of your work by the "Export Current Working State" button under the "Export" Pane. This will let you download the current storage to your local computer.<br>
-                                    When you continue work, or experience troubles, you can reimport this state with the "Browse..." (The File selection Input) under the "Import" Pane when you click on "Advanced".<br>
-                                    This will import your backup and overwrite all current storage.<br>
-                                    <br>
-                                    <h4>Shortcuts on the Translation Panel:</h4>
-                                    <ul>
-                                        <li>strg + → : Next Text Snippet</li>
-                                        <li>strg + ← : Previous Text Snippet</li>
-                                    </ul>
-                                </span>
                             </div>
                         </div>
                     </div>
