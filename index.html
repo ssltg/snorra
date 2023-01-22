@@ -74,7 +74,7 @@
                 </div>
             </div>
             <div id="translationContainer" class="container-fluid h-75 collapse" data-bs-parent="#accordion">
-                <div class="row">
+                <div class="row h-75">
                     <div class="col d-flex justify-content-between">
                         <div>
                             <label for="ignoreCompleted" >ignore Completed</label>
@@ -136,15 +136,15 @@
                     </div>
                 </div>
             </div>
-            <div id="exportContainer" class="container-fluid h-75 collapse" data-bs-parent="#accordion">
-                <div class="row justify-content-center h-75">
-                    <div id="exportdiv" class="container-fluid col-12 h-100">
-                        <div class="row h-100">
-                            <div class="col-12 h-100">
-                                <i>Paste this content to the Localization.XXX.txt from the target language in the text field. XXX should be the language you translated to.</i>
-                                <button type="button" onclick="exportLocalStorage()" class="p-1 btn btn-outline-dark" title="Export Current Working State">Export Current Working State</button>
-                                <textarea id="export" class="w-100 h-100"></textarea>
-                            </div>
+        </div>
+        <div id="exportContainer" class="container-fluid h-75 collapse" data-bs-parent="#accordion">
+            <div class="row justify-content-center h-75">
+                <div id="exportdiv" class="container-fluid col-12 h-100">
+                    <div class="row h-100">
+                        <div class="col-12 h-100">
+                            <i>Paste this content to the Localization.XXX.txt from the target language in the text field. XXX should be the language you translated to.</i>
+                            <button type="button" onclick="exportLocalStorage()" class="p-1 btn btn-outline-dark" title="Export Current Working State">Export Current Working State</button>
+                            <textarea id="export" class="w-100 h-100"></textarea>
                         </div>
                     </div>
                 </div>
