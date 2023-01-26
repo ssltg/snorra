@@ -23,6 +23,14 @@
         #keySelect {
             max-width: 200px;
         }
+
+        .spinner-grow {
+            display: none;
+        }
+
+        .spinner-grow.show {
+            display: inline-block;
+        }
     </style>
 </head>
 <body  class="h-100">
@@ -130,7 +138,10 @@
                 </div>
                 <div class="row justify-content-center">
                     <div class="col d-flex justify-content-center">
-                        <button type="button"class="m-1 btn btn-secondary text-center" onclick="translateDuplicates()">Translate Duplicates</button>
+                        <button type="button"class="m-1 btn btn-secondary text-center" onclick="translateDuplicates()">Translate Duplicates
+                            <span class="spinner-grow spinner-grow-sm" id="duplicateSpinner" role="status" aria-hidden="true"></span>
+                            <span class="visually-hidden">Loading...</span>
+                        </button>
                         <button type="button"class="m-1 btn btn-secondary text-center" onclick="sourceView()">SourceView</button>
                         <a class="m-1 btn btn-secondary text-center" onmousedown="sourceToClipboard()" target="deeplTab" href="https://www.deepl.com/translator">copy source to clipboard and open deepl</a>
                     </div>

@@ -53,6 +53,10 @@ function checkPercentage() {
 }
 
 function translateDuplicates() {
+    setTimeout(function() {
+        $('span#duplicateSpinner').addClass('show');
+    }, 100);
+
     let translation = JSON.parse(window.localStorage.getItem('translation'));
     let source = JSON.parse(window.localStorage.getItem('source'));
     if (source === undefined || source === null || translation === undefined || translation === null) {
@@ -65,10 +69,11 @@ function translateDuplicates() {
     for (const [index, element] of Object.entries(translation)) {
         if(element['completed'] === true){
             for (const [index2, element2] of Object.entries(clonedTranslation)) {
-                if (
-                        (element2['completed'] === undefined || element2['completed'] === false) &&
-                        element2['value'] === source[index]['value']
-                ) {
+                if (!(element2['completed'] === undefined || element2['completed'] === false)) {
+                    continue;
+                }
+
+                if (source[index2]['value'] === source[index]['value']) {
                     changed = true;
                     element2['value'] = element['value'];
                     element2['completed'] = true;
@@ -80,6 +85,9 @@ function translateDuplicates() {
     if (changed) {
         window.localStorage.setItem('translation', JSON.stringify(clonedTranslation));
     }
+    setTimeout(function() {
+        $('span#duplicateSpinner').removeClass('show');
+    }, 2000);
 }
 
 function dropImportHandler(ev) {
@@ -296,7 +304,7 @@ function fillSelect() {
     }
     let ignoreCompleted = document.getElementById('ignoreCompleted').checked;
     let translation = {};
-    console.log(ignoreCompleted);
+
     if (ignoreCompleted) {
        translation = JSON.parse(window.localStorage.getItem('translation'));
     }
